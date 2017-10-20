@@ -73,7 +73,11 @@
                                         <span>{{kid.kid_father_name}}</span><br>
                                         <span class="glyphicon glyphicon-phone"> {{kid.kid_father_phone}}</span><br>
                                         <span class="glyphicon glyphicon-envelope"> {{kid.kid_father_email}}</span><br>
-                                        <span [ngStyle]="{'display' : kid.kid_father_company ? 'inline' : 'none'}" class="glyphicon glyphicon-briefcase"> {{kid.kid_father_company}}</span>
+                                        <span 
+                                            [ngStyle]="{'display' : kid.kid_father_company ? 'inline' : 'none'}" 
+                                            class="glyphicon glyphicon-briefcase"> 
+                                            {{kid.kid_father_company}}
+                                        </span>
                                         
                                         <div class="nameMotherFatherHeader">Mother</div>
                                         <span>{{kid.kid_mother_name}}</span><br>
