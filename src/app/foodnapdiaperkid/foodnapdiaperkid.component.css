@@ -1,0 +1,15 @@
+.pointerImage{
+      cursor: pointer;
+}
+
+#wrapper {
+     margin: 0 auto;
+}
+#leftcolumn, #rightcolumn {
+    float: left;
+    padding:3px;
+}
+
+.missingFormValues{
+    border:3px solid red;
+}

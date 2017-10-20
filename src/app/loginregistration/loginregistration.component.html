@@ -1,0 +1,284 @@
+<div class="container">
+    <div class="row">
+		<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-login">
+					<div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <img src="../../assets/images/daycarelogo.jpeg" style="width:100%;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="panel-body">
+                        <div style="border-top: 1px solid lightgrey;"  class="form-group"></div>
+                    </div>
+                <div class="col-xs-6">
+                <div 
+                  (click)="whatToUse('login')" 
+                  class="active loginregisterheader"
+                  [ngStyle]="{'color':myOption == 'register' ? 'lightgrey' : '#59B2E0'}"
+                  [style.opacity]="getOpacity()"
+                >
+                  Login
+                </div>
+                </div>
+                <div class="col-xs-6">
+                <div  
+                  (click)="whatToUse('register')"  
+                  class="loginregisterheader" 
+                  [ngStyle]="{'color':myOption == 'login' ? 'lightgrey' : '#1CB94E'}" 
+                  [style.opacity]="getOpacity()"
+                >
+                  Register
+              </div>
+		    </div>
+            </div>
+			<div class="panel-body">
+            <div class="row"  *ngIf="showSpinner" @fadeInSpinner>
+               <div class="spinnerFont">Processing...</div>
+            </div>
+              <div class="row" >
+              <div class="spinner" *ngIf="showSpinner" @fadeInSpinner>
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+                
+              </div>
+             
+            </div>
+
+            <!-- LOGIN FORM -->
+			<div class="row"[style.opacity]="getOpacity()">
+			    <div class="col-lg-12">
+                <div  *ngIf="myOption=='login'" @fadeInAnimation @scaleForm>
+                  <form id="login-form" #loginForm="ngForm"  (ngSubmit)="checkLogin(loginForm.value)">
+                    <div class="form-group input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                      <input 
+                        type="email" 
+                        name="username" 
+                        ngModel 
+                        email
+                        #username="ngModel" 
+                        id="username" 
+                        tabindex="1" 
+                        class="form-control" 
+                        placeholder="Email address"
+                        required
+                        [disabled]="isRecoverAccount"
+                        (focus)="clearSentRecoverPasswordMessage()"
+                      >
+                    </div>
+                      
+                    <div class="form-group input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input 
+                        type="password" 
+                        [disabled]="!username.valid || isRecoverAccountb || !username.valid"
+                        ngModel 
+                        name="password" 
+                        id="password" 
+                        tabindex="2" 
+                        class="form-control" 
+                        placeholder="Password"
+                        #password="ngModel"
+                        required
+                        (focus)="clearSentRecoverPasswordMessage()"                        
+                      >
+                    </div>
+                    <div class="form-group text-center">
+                      <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                      <label for="remember"> Remember Me</label>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input 
+                            type="submit" 
+                            [disabled]="!username.valid || !password.valid || isSubmitting"  
+                            name="login-submit" 
+                            id="login-submit" 
+                            tabindex="4" 
+                            class="form-control btn btn-login" 
+                            value="Log In"
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="text-center">
+                            <a href="javascript:void(0);" tabindex="5" (click)="recoverPasswordForm()" class="forgot-password">Forgot Password?</a>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="alert alert-danger" *ngIf="!hasUserName" @itemAnim>Username is required</div>
+                      <div class="alert alert-danger" *ngIf="!hasPassWord" @itemAnim>Password is required</div>
+                      <div class="alert alert-danger" *ngIf="!hasCorrectLogin" @itemAnim>Wrong username or password</div>
+                      <div class="alert alert-success" *ngIf="hasCorrectEmailMessage" @itemAnim>Password sent to: {{emailRecover}}</div>
+                    </div>
+                </form>
+                </div>
+              <div class="row"  *ngIf="showSpinnerPassword" @fadeInSpinner>
+               <div class="spinnerFont">Processing...</div>
+              </div>
+              <div class="row">
+                <div class="spinner" *ngIf="showSpinnerPassword" @fadeInSpinner>
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                </div>
+              </div>
+
+              <!-- Register FORM -->
+                <div  *ngIf="myOption=='register'" @fadeInAnimation1 @scaleForm>
+                  <form id="register-form"  #registerForm="ngForm"  (ngSubmit)="checkRegistration(registerForm.value)">
+                    <div class="form-group input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                      <input 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        ngModel
+                        required
+                        email
+                        #email="ngModel" 
+                        tabindex="1" 
+                        class="form-control" 
+                        placeholder="Email Address" 
+                        (keyup)="enableRegistrationPassword(email.value)"
+                      >
+                    </div>
+                    <div class="form-group input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input 
+                        type="password" 
+                        name="registrationpassword" 
+                        id="registrationpassword" 
+                        ngModel
+                        #registrationpassword="ngModel" 
+                        tabindex="2" 
+                        required
+                        class="form-control" 
+                        placeholder="Password"
+                        [disabled]="!hasEmailEntered || !email.valid"
+                        (keyup)="enableRegistrationConfirmPassword(registrationpassword.value)"
+                      >
+                    </div>
+                    <div class="form-group input-group">
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input 
+                        type="password" 
+                        name="confirmpassword" 
+                        id="confirmpassword" 
+                        tabindex="3" 
+                        required
+                        ngModel
+                        #confirmpassword="ngModel"
+                        class="form-control" 
+                        placeholder="Confirm Password"
+                        [disabled]="!hasEmailEntered || !email.valid || !hasRegistrationPassword || !registrationpassword.valid"
+                        (keyup)="checkForConfirmPassword(confirmpassword.value)"
+                      >
+                    </div>
+                    <div class="row">
+                        <br><br>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input 
+                            type="submit" 
+                            name="register-submit" 
+                            id="register-submit" 
+                            tabindex="4" 
+                            class="form-control btn btn-register" 
+                            value="Register Now"
+                            [disabled]= "!hasEnteredConfirmPassword || isSubmitting || !hasPasswordMatch"
+                          >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <br>
+                      <div class="alert alert-danger" *ngIf="!hasRegistrationEmail" @itemAnim>Email address is required</div>
+                      <div class="alert alert-danger" *ngIf="!hasRegistrationPassword" @itemAnim>Password is required</div>
+                      <div class="alert alert-danger" *ngIf="!hasConfirmPassword" @itemAnim>Confirm Password is required</div>
+                      <div class="alert alert-danger" *ngIf="!hasPasswordMatch" @itemAnim>Passwords don't match</div>
+                      <div class="alert alert-danger" *ngIf="hasAccount" @itemAnim>Account already exists for this email address</div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+							</div>
+            </div>
+            <div class="row"*ngIf="isRecoverAccount" @recoveraccount>
+              <div class="col-lg-12">
+                <div class="alert-placeholder"></div>
+                <div class="panel panel-success">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="text-center forgot-password">Forgot Password</div>
+                        <form id="register-form"  autocomplete="off" #frmRetrievePwd="ngForm"  (ngSubmit)="recoverPasswordInfo(frmRetrievePwd.value)">
+                        <div class="form-group input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                          <input 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            ngModel
+                            tabindex="1" 
+                            class="form-control" 
+                            placeholder="Enter your email address" 
+                            value=""
+                            #myinput
+                            #email="ngModel"
+                            autocomplete="off" 
+                            required
+                            (keyup)="RemoveRequiredEmail()" 
+                          />
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-12 text-center">
+                              <input type="submit"
+                                id="btnRecover" 
+                                class="btn btn-primary btn-md center-block" 
+                                Style="width: 100px;" 
+                                value="Submit"
+                              >
+                              
+                              <input type="buton"
+                                id="btnCancelRecover" 
+                                class="btn btn-danger btn-md center-block" 
+                                style="width: 100px;" 
+                                (click)="cancelRecoverAcountInfo()"
+                                value="Cancel"
+                              >
+                          </div>
+                          
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 text-center">
+                      <div class="alert alert-danger" *ngIf="!hasCorrectEmail" >No account found for this email address</div>
+                      <div class="alert alert-danger" *ngIf="!hasEmail"@itemAnim>Email is required in order to retrive password</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              </div>
+					</div>
+				</div>
+			</div>
+		</div>

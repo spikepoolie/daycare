@@ -1,0 +1,43 @@
+<div class="container">    
+    <div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-login">
+				<div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <img src="../../assets/images/daycarelogo.jpeg" style="width:100%;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel-body">
+                            <div style="border-top: 1px solid lightgrey;"  class="form-group"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel-body">
+                            <div style="text-align:center">
+                                <div *ngFor="let todo of dayCareOptions">
+                                    <a class="btn btn-info btn-lg" style="width:220px; padding:5px;" routerLink="/{{todo.optionType.split('|')[1]}}"> 
+                                         <span class="glyphicon pull-left" [ngClass]="
+                                            {
+                                                'glyphicon-plus' : todo == 'New Child',
+                                                'glyphicon-info-sign' : todo == 'Kids',
+                                                'glyphicon-dashboard' : todo == 'Food / Nap / Diaper',
+                                                'glyphicon-envelope' : todo == 'Send Email'
+
+                                            }"
+                                            ></span> 
+                                        {{todo.optionType.split('|')[0]}}
+                                    </a>
+                                    <br><br>
+                                </div>
+                                <router-outlet></router-outlet>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    

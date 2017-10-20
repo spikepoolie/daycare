@@ -1,0 +1,62 @@
+
+
+.listrap {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	cursor: default;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	}
+
+	.listrap li {
+	margin: 0;
+	padding: 10px;
+}
+
+.kidImage{
+	width:90px;
+	height: 100px;
+}
+
+.kidName{
+	color:#00A0CB;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+hasAllergies{
+	color:red;
+	font-weight: bold;
+}
+
+hasAllergiesTitle{
+	font-size:14pt;
+	font-weight: bold;
+}
+
+.bdaySpan{
+	padding-left:35px;
+	color:#0FA5D0;
+	font-weight: bold;
+}
+
+.kidComments{
+	color: green;
+	font-style: italic; 
+	font-weight: bold;
+}
+
+.moreLessStyle{
+	color: lightskyblue;
+	cursor: pointer;
+}
+
+.nameMotherFatherHeader{
+	font-weight: bold;
+	color:lightcoral;
+	margin-top:8px; 
+}

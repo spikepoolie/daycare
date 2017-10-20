@@ -1,0 +1,330 @@
+<div class="container">    
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <img src="../../assets/images/daycarelogo.jpeg" style="width:100%;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel-body">
+                            <div style="border-top: 1px solid lightgrey; text-align: center;"  class="form-group">
+                                <h4>Entries for</h4><h4 class="greenColor"> {{kidname}}</h4>
+                                 <hr>
+                                 <div class="alert alert-danger" *ngIf="!hasCorrectNapAmPm" @itemAnim>Nap has wrong values for am/pm</div>
+                                 <div class="alert alert-danger" *ngIf="missingNapToHours" @itemAnim>Nap To is missing value</div>
+                                 <div class="alert alert-danger" *ngIf="missingNapFromHours" @itemAnim>Nap From is missing value</div>
+                                 <div class="alert alert-danger" *ngIf="noformvalues" @itemAnim>No enough values have been entered</div>
+                                 <div class="alert alert-danger" *ngIf="isMissingDiaperType" @itemAnim>No diaper type has been selected</div>
+                                 <div class="alert alert-danger" *ngIf="isMissingDiaperTime && !noformvalues" @itemAnim>No time for changed diaper has been selected</div>
+                                 <div class="alert alert-danger" *ngIf="isMissingMeal" @itemAnim>No meals have been entered</div>
+                                 <div class="alert alert-success" *ngIf="isRecordInserted" @itemAnim>Entry processed successfully</div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <form id="entryForm" #entryForm="ngForm"  (ngSubmit)="addEntry(entryForm.value)">
+                        <input type="hidden" name="kid_id" ngModel  [(ngModel)]="kid_id" value="{{kid_id}}">
+                        <input type="hidden" name="entry_id" ngModel  [(ngModel)]="entry_id" value="{{entry_id}}">
+                        <div class="row">
+                            <div class="col-xs-2" >
+                                <img src="../../assets/images/nap.png" alt="Enter Nap information" title="Nap" class="pointerImage">
+                                <br>
+                                <span style="color:green;font-weight: bold;margin-left: 15px; cursor: default;">Naps</span>
+                                <div class="row">
+                                    <br><br>
+                                </div>
+                                <img src="../../assets/images/foodjar.png" alt="Meal" title="Meal" class="pointerImage">
+                                <br>
+                                <span style="color:green;font-weight: bold;margin-left: 5px; cursor: default;">Meals</span>
+                                <div class="row">
+                                    <br><br>
+                                </div>
+                                <img src="../../assets/images/diaper.png" alt="Diper" title="Diaper"  class="pointerImage">
+                                <br>
+                                <span style="color:green;font-weight: bold; cursor: default;">Diapers</span>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="row">
+                                    <div class="col-xs-6" >
+                                        <div class="form-group" style="margin-left:20px;">
+                                            <span>
+                                                <label class="control-label" for="napFromHours">From:</label>
+                                            </span>
+                                            <span style="margin-left:30px;font-weight: bold">am/pm</span>
+                                            <div id="wrapper">
+                                                <div id="leftcolumn">
+                                                    <select 
+                                                        style="width:70px;" 
+                                                        ngModel 
+                                                        (change)="SetNapAmPm($event.target.value,'napfrom')" 
+                                                        name="napFromHours" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="napFromHours"
+                                                        [ngClass]="missingNapFromHours ? 'missingFormValues' : ''"
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option *ngFor="let option of fromHours" >{{option}}</option>
+                                                    </select>
+                                                </div>
+                                                <div id="rightcolumn">
+                                                    <select 
+                                                        style="width:50px;"  
+                                                        name="napFromAmPm" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="napFromAmPm"
+                                                        (change)="CheckNapAmPm($event.target.value,'napfrom')" 
+                                                    >
+                                                        <option value="am">am</option>
+                                                        <option value="pm">pm</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" >
+                                        <div class="form-group">
+                                            <span><label class="control-label" for="napToHours">To:</label></span>
+                                            <span style="margin-left:50px;font-weight: bold">am/pm</span>
+                                            <div id="wrapper">
+                                                <div id="leftcolumn">
+                                                    <select 
+                                                        style="width:70px;" 
+                                                        ngModel
+                                                        name="napToHours" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="napToHours"
+                                                        (change)="SetNapAmPm($event.target.value,'napto')"
+                                                        [ngClass]="missingNapToHours ? 'missingFormValues' : ''"
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option *ngFor="let option of fromHours">{{option}}</option>
+                                                    </select>
+                                                </div>
+                                                <div id="rightcolumn">
+                                                    <select 
+                                                        style="width:50px;" 
+                                                        name="napToAmPm" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="napToAmPm"
+                                                        
+                                                       (change)="CheckNapAmPm($event.target.value,'napto')" 
+                                                    >
+                                                        <option value="am">am</option>
+                                                        <option value="pm">pm</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="row">
+                                    <br><br>
+                                    <div class="col-xs-6" >
+                                        <div class="form-group" style="margin-left:20px;">
+                                            <label class="control-label" for="mealTime">Time I ate:</label>
+                                            <div id="wrapper">
+                                                <div id="leftcolumn">
+                                                    <select 
+                                                        style="width:65px;" 
+                                                        ngModel
+                                                        name="mealTime" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="mealTime"
+                                                        (change)="SetNapAmPm($event.target.value,'meal')" 
+                                                        [ngClass]="hasErrorMealTime ? 'missingFormValues' : ''"
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option *ngFor="let option of fromHours" >{{option}}</option>
+                                                    </select>
+                                                </div>
+                                                <div id="rightcolumn">
+                                                    <select 
+                                                        style="width:50px;" 
+                                                        name="mealAmPm" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="mealAmPm"
+                                                    >
+                                                        <option value="am">am</option>
+                                                        <option value="pm">pm</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" >
+                                        <div class="form-group">
+                                            <label class="control-label">My Meal:</label>
+                                            <textarea 
+                                                class="form-control" 
+                                                (keyup)="isMissingMeal = false;"  
+                                                rows="2" 
+                                                cols="20" 
+                                                ngModel
+                                                name="myMeal" 
+                                                [(ngModel)]="myMeal" 
+                                                style="resize: none;"
+                                                [ngClass]="isMissingMeal ? 'missingFormValues' : ''"
+                                            >
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="row">
+                                    <br>
+                                    <div class="col-xs-6" >
+                                        <div class="form-group" style="margin-left:20px;">
+                                           <span>
+                                                <label class="control-label" for="diaperChangedAt">Changed:</label>
+                                            </span>
+                                            <span style="margin-left:10px;font-weight: bold">am/pm</span>
+                                            <div id="wrapper">
+                                                <div id="leftcolumn">
+                                                    <select 
+                                                        style="width:65px;" 
+                                                        ngModel
+                                                        name="diaperChangedAt" 
+                                                        class="form-control" 
+                                                        [(ngModel)]="diaperChangedAt"
+                                                        (change)="SetNapAmPm($event.target.value,'diaper')"
+                                                        [ngClass]="isMissingDiaperTime ? 'missingFormValues' : ''" 
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option *ngFor="let option of fromHours" >{{option}}</option>
+                                                    </select>
+                                                </div>
+                                                <div id="rightcolumn">
+                                                    <select 
+                                                        style="width:50px;" 
+                                                        name="diaperAmPm" 
+                                                        class="form-control" 
+                                                        ngModel
+                                                        [(ngModel)]="diaperAmPm"
+                                                    >
+                                                        <option value="am">am</option>
+                                                        <option value="pm">pm</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" >
+                                        <div class="form-group">
+                                            <label class="control-label" for="diaperType">Diaper type:</label>
+                                            <div>
+                                                <select 
+                                                    style="width:90px;" 
+                                                    name="diaperType" 
+                                                    class="form-control"
+                                                    ngModel 
+                                                    [(ngModel)]="diaperType"
+                                                    (change)="isMissingDiaperType = false; noformvalues = false; isMissingDiaperTime = false;"
+                                                    [ngClass]="isMissingDiaperType ? 'missingFormValues' : ''"
+                                                >
+                                                    <option value="">Select</option>
+                                                    <option *ngFor="let option of diaperTypes" >{{option}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-2">
+                                    <div class="row">
+                                    <br>
+                                </div>
+                                    <div class='form-inline'>
+                                        <input 
+                                            type="submit"
+                                            name="entry-submit" 
+                                            id="entry-submit"
+                                            class="form-control btn btn-success" 
+                                            value="Add Entry"
+                                            style="height: 35px;"
+                                        >
+                                    
+                                        <input 
+                                            type="button"
+                                            name="entry-cancel" 
+                                            id="entry-cancel"
+                                            class="form-control btn btn-danger"
+                                            style="height: 35px;"
+                                            value="Reset Form"
+                                            (click)="clearFormFields()"
+                                        >
+
+                                        <input 
+                                            type="button"
+                                            name="entry-edit" 
+                                            id="entry-entry"
+                                            class="form-control btn btn-warning"
+                                            style="height: 35px;"
+                                            value="Update Entry"
+                                            [disabled]="!isUpdatingEntry"
+                                            (click)="updateEntry(entryForm.value)"
+                                            *ngIf="isUpdatingEntry" @itemAnim2
+                                        >
+                                    </div>
+                                    <div><br></div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="panel-body"  style="height: 100%; overflow: scroll;">
+                            <div style="border-top: 1px solid lightgrey; text-align: center;"  class="form-group">
+                                <h4 class="centerText greenColor">Today's entries</h4>
+                            </div>
+                           
+                            <table class="table  table-striped table-bordered ">
+                                <thead>
+                                    <tr>
+                                    <th width="20%">Naps</th>
+                                    <th width="20%">Diapers</th>
+                                    <th width="46%">Meals</th>
+                                    <th width="10%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let entry of data">
+                                    <td>{{entry.kid_nap_from}} <span [style.display]="entry.kid_nap_from != ' ' ? 'inline' : 'none'">-</span> {{entry.kid_nap_to}}</td>
+                                    <td>{{entry.kid_diaper_type}}  <span [style.display]="entry.kid_diaper_type ? 'inline' : 'none'">@ </span>{{entry.kid_diaper_change_time}}</td>
+                                    <td>{{entry.kid_meal}} <span [style.display]="entry.kid_meal ? 'inline' : 'none'">@</span> {{entry.kid_meal_time}}</td>
+                                     <td>
+                                         <div class="form-inline">
+                                             <img 
+                                                src="../../assets/images/trash.png" 
+                                                title="Delete this entry" 
+                                                alt="Delete this entry" 
+                                                style="width:18px; height: 22px;cursor:pointer;" 
+                                                (click)="deleteEntry(entry.entry_id);"
+                                            >
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <img 
+                                                src="../../assets/images/edit.png" 
+                                                title="Edit this entry" 
+                                                alt="Edit this entry" 
+                                                style="width:18px; height: 22px;cursor:pointer;" 
+                                                (click)="editEntry(entry,entryForm.value);"
+                                            >
+                                        </div>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+

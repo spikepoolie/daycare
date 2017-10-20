@@ -1,0 +1,28 @@
+<div class="container">    
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+          <div class="panel panel-login">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-lg-12 ">
+                  <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                      <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                          <li routerLinkActive="active current"><a routerLink="home">Home</a></li>
+                          <li [ngStyle]="{'display':isAdmin == 0 ? 'none' : 'inline'}"  routerLinkActive="active current"><a routerLink="newkidregistration">New Kid</a></li>
+                          <li [ngStyle]="{'display':isAdmin == 0 ? 'none' : 'inline'}"  routerLinkActive="active current"><a routerLink="loginregistration">Loging/Registration</a></li>
+                          <li [ngStyle]="{'display':isAdmin == 0 ? 'none' : 'inline'}"  routerLinkActive="active current"><a routerLink="kids">Kids</a></li>
+                          <li [ngStyle]="{'display':isAdmin == 0 ? 'none' : 'inline'}"  routerLinkActive="active current"><a routerLink="options">Options</a></li>
+                          <li [ngStyle]="{'display':isAdmin == 0 ? 'none' : 'inline'}"  routerLinkActive="active current"><a routerLink="foodnapdiaper">Food Nap Diaper</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

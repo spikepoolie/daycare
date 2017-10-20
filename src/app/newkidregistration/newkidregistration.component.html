@@ -1,0 +1,322 @@
+<div class="container">    
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <div class="panel panel-login" style="background-color: #F8F8F8">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <img src="../../assets/images/daycarelogo.jpeg" style="width:100%;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel-body" style="border-top: 1px solid lightgrey; text-align: center;"  class="form-group">
+                            <h4>New Registration</h4>
+                            <hr style="border-width: 4px;">
+                            <div class="alert alert-danger" *ngIf="!kidname" @itemAnim>Name is required</div>
+                            <div class="alert alert-danger" *ngIf="!kidbirthay" @itemAnim>Birthday is required</div>
+                            <div class="alert alert-danger" *ngIf="!kidgender" @itemAnim>Gender is required</div>
+                            <div class="alert alert-danger" *ngIf="!fathername" @itemAnim>Father's name is required</div>
+                            <div class="alert alert-danger" *ngIf="!fatheremail" @itemAnim>Father's email is required</div>
+                            <div class="alert alert-danger" *ngIf="!fatherphone" @itemAnim>Father's phone is required</div>
+                            <div class="alert alert-danger" *ngIf="!mothername" @itemAnim>Mother's name is required</div>
+                            <div class="alert alert-danger" *ngIf="!motheremail" @itemAnim>Mother's email is required</div>
+                            <div class="alert alert-danger" *ngIf="!motherphone" @itemAnim>Mother's phone is required</div>
+                            <div class="alert alert-danger" *ngIf="motherfathernotapplicable" @itemAnim>Either Father's or Mother's info is Required</div>  
+                            <div class="alert alert-success" *ngIf="registrationdone" @itemAnim>Registration completed successfully</div> 
+                        </div>
+                    </div>
+                    <div @fadeInAnimation @scaleForm>
+                        <div><h3 style="color: #43AED3;">Kid</h3></div>
+                        <form name="entryForm" #entryForm="ngForm" (ngSubmit)="addNewKid(entryForm.value)">
+                            <input type="hidden" name="kidbday" ngModel [(ngModel)]="kidbday"> 
+                            <div class="form-inline">
+                                <label for="kid_name">Name</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="kid_name"
+                                    ngModule
+                                    [(ngModel)]="kid_name" 
+                                    required
+                                    size="35"
+                                    style="margin-right:122px;"
+                                    (keyup)="kidname = true"
+                                >
+                                
+                                <label for="kid_nickname">Nickname</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="kid_nickname"
+                                    ngModel
+                                    [(ngModel)]="kid_nickname" 
+                                    size="36"
+                                    value="{{kid_nickname}}"
+                                >
+                            </div>
+                            <div class="form-inline" style="margin-top:40px;">
+                                <label for="kid_gender">Gender</label>
+                                <select 
+                                    class="form-control" 
+                                    style="width:80px;"
+                                    name="kid_gender" 
+                                    ngModel
+                                    [(ngModel)]="kid_gender"
+                                    style="margin-right:125px;width:265px;"
+                                    (change)="kidgender = true"
+                                >
+                                    <option value="Male" selected>Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <span class="form-inline">
+                                    <label>Birthday</label>
+                                    
+                                    <select 
+                                        style="width:150px;"
+                                        class="form-control"
+                                        name="monthBday"
+                                        [(ngModel)]="monthBday"
+                                        (change)="checkIfFebruary(monthBday)"
+                                    >
+                                        <option *ngFor="let months of monthsBday">{{months}}</option> 
+                                    </select>
+                                    <select 
+                                        class="form-control"
+                                        name="daysBday"
+                                        style="width:68px;"
+                                        [(ngModel)]="daysBday"
+                                    >
+                                        <option *ngFor="let days of dayBday">{{days}}</option> 
+                                    </select>
+
+                                    <select 
+                                        style="width:68px;"
+                                        class="form-control"
+                                        name="yearsBday"
+                                        [(ngModel)]="yearsBday"
+                                    >
+                                        <option *ngFor="let years of yearsListBday">{{years}}</option> 
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="form-inline" style="margin-top:30px;">
+                                <label for="kid_allergies">Allergies</label>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="2" 
+                                    cols="31"   
+                                    name="kid_allergies" 
+                                    ngModel
+                                    [(ngModel)]="kid_allergies"
+                                    style="margin-right:111px;resize: none;"
+                                >
+                                </textarea>
+                                <span>&nbsp;&nbsp;&nbsp;</span>
+                                <label for="comments">Comments</label>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="2" 
+                                    cols="33"
+                                    name="comments" 
+                                    ngModel
+                                    [(ngModel)]="comments" 
+                                    style="resize: none;"
+                                >
+                                </textarea>
+                            </div>
+                            <div><hr style="border-width: 4px;"></div>
+                            <div class="form-inline">
+                                    <span style="color: #43AED3;font-size:18pt;">
+                                        Father
+                                    </span>
+                                    &nbsp;&nbsp;
+                                   <div class="checkbox">
+                                        <label style='color:lightcoral;'>
+                                            <input 
+                                                type="checkbox" 
+                                                name="fathernotapplicable"
+                                                ngModel
+                                                [ngModel]="fathernotapplicable"
+                                                value="fna"
+                                                (click)='makeFatherNotApplicable($event)'
+                                            >&nbsp;Not applicable
+                                    </label>
+                                    </div>
+                            </div>
+                            <div class="form-inline" style="margin-top:5px;">
+                                <label for="kid_father_name">Name</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="kid_father_name"
+                                    ngModel
+                                    [(ngModel)]="kid_father_name"
+                                    required
+                                    size="34"
+                                    style="margin-right:130px;"
+                                    (keyup)="fathername = true"
+                                    [readonly]="isFatherDisabled"
+                                    [ngClass]="isFatherDisabled ? 'grayish' : 'blackish'"
+                                >
+
+                                <label for="kid_father_phone">Phone</label>
+                                <input 
+                                    type="phone" 
+                                    class="form-control"
+                                    size="39"
+                                    name="kid_father_phone"
+                                    ngModel
+                                    [(ngModel)]="kid_father_phone"
+                                    (keyup)="fatherphone = true"
+                                    [readonly]="isFatherDisabled"
+                                    [ngClass]="isFatherDisabled ? 'grayish' : 'blackish'"
+                                >
+                            </div>
+
+                            <div class="form-inline" style="margin-top:30px;">
+                                <label for="kid_father_phone">Email</label>
+                                <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    id="kid_father_email"
+                                    size="34"
+                                    name="kid_father_email"
+                                    ngModel
+                                    [(ngModel)]="kid_father_email"
+                                    style="margin-right:132px;"
+                                    (keyup)="fatheremail = true"
+                                    [readonly]="isFatherDisabled"
+                                    [ngClass]="isFatherDisabled ? 'grayish' : 'blackish'"
+                                >
+                                
+                                <label for="kid_father_work">Company</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="kid_father_company"
+                                    size="36"
+                                    name="kid_father_company"
+                                    ngModel
+                                    [(ngModel)]="kid_father_company"
+                                    [readonly]="isFatherDisabled"
+                                    [ngClass]="isFatherDisabled ? 'grayish' : 'blackish'"
+                                >
+                            </div>
+                            
+                            <hr style="border-width: 4px;">
+                            <div><hr style="border-width: 4px;"></div>
+                            <div class="form-inline">
+                                    <span style="color: #43AED3;font-size:18pt;">
+                                        Mother
+                                    </span>
+                                    &nbsp;&nbsp;
+                                   <div class="checkbox">
+                                        <label style='color:lightcoral;'>
+                                            <input 
+                                                type="checkbox" 
+                                                name="mothernotapplicable" 
+                                                ngModel 
+                                                [(ngModel)]="mothernotapplicable"
+                                                value="mna"
+                                                (click)="makeMotherNotApplicable($event)"
+                                            >
+                                            &nbsp;Not applicable
+                                        </label>
+                                    </div>
+                            </div>
+                            <div class="form-inline" style="margin-top:5px;">
+                                <label for="kid_father_name">Name</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="kid_mother_name"
+                                    ngModel
+                                    [(ngModel)]="kid_mother_name"
+                                    required
+                                    size="34"
+                                    style="margin-right:130px;"
+                                    (keyup)="mothername = true"
+                                    [value]="kid_mother_name"
+                                    [readonly]="isMotherDisabled"
+                                    [ngClass]="isMotherDisabled ? 'grayish' : 'blackish'"
+                                >
+
+                                <label for="kid_mother_phone">Phone</label>
+                                <input 
+                                    type="phone" 
+                                    class="form-control" 
+                                    id="kid_mother_phone"
+                                    size="39"
+                                    name="kid_mother_phone"
+                                    ngModel
+                                    [(ngModel)]="kid_mother_phone"
+                                    (keyup)="motherphone = true"
+                                    [readonly]="isMotherDisabled"
+                                    [ngClass]="isMotherDisabled ? 'grayish' : 'blackish'"
+                                >
+                            </div>
+
+                            <div class="form-inline" style="margin-top:30px;">
+                                <label for="kid_mother_email" >Email</label>
+                                <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    id="kid_mother_email"
+                                    size="34"
+                                    name="kid_mother_email"
+                                    ngModel
+                                    [(ngModel)]="kid_mother_email"
+                                    style="margin-right:132px;"
+                                    (keyup)="motheremail = true"
+                                    [readonly]="isMotherDisabled"
+                                    [ngClass]="isMotherDisabled ? 'grayish' : 'blackish'"
+                                >
+                                
+                                <label for="kid_mother_work">Company</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="kid_mother_company"
+                                    size="36"
+                                    name="kid_mother_company"
+                                    ngModel
+                                    [(ngModel)]="kid_mother_company"
+                                    [readonly]="isMotherDisabled"
+                                    [ngClass]="isMotherDisabled ? 'grayish' : 'blackish'"
+                                >
+                            </div>
+
+                            <div class="row"> 
+                                <hr>
+                                <div class="col-md-9 col-sm-offset-4" style="margin-top:20px;">
+                                    <div class='form-inline'>
+                                        <input 
+                                            type="submit"
+                                            name="entry-new" 
+                                            id="entry-entry"
+                                            class="form-control btn btn-success" 
+                                            value="Submit Info"
+                                            style="height: 35px;"
+                                            [disabled]="motherfathernotapplicable"
+                                        >
+                                    
+                                        <input 
+                                            type="button"
+                                            name="entry-cancel" 
+                                            id="entry-cancel"
+                                            class="form-control btn btn-danger"
+                                            style="height: 35px;"
+                                            value="Reset Form"
+                                            (click)="clearFormFields()"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                   </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+

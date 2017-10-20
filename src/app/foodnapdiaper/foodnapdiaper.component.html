@@ -1,0 +1,35 @@
+<div class="container">    
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <img src="../../assets/images/daycarelogo.jpeg" style="width:100%;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel-body">
+                            <div style="border-top: 1px solid lightgrey; text-align: center;"  class="form-group">
+                                 <h4 style="color:green">Food - Nap - Diaper</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="columnList">
+                        <div  *ngFor="let kid of data">
+                              <img 
+                                src="http://www.goemobile.com/mobile/daycare/{{kid.kid_picture_url}}" 
+                                [routerLink]="['/foodnapdiaperkid',kid.kid_id, kid.kid_name, kid.kid_picture_url]"
+                                class="img-responsive img-circle kidImage"
+                              >
+                              <span class="kidNameImage">{{kid.kid_name}}</span>
+                              <div class="clearfix"></div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

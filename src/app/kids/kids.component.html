@@ -1,0 +1,94 @@
+<div class="container">    
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <img src="../../assets/images/daycarelogo.jpeg" style="width:100%;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel-body">
+                            <div style="border-top: 1px solid lightgrey; text-align: center;"  class="form-group">
+                                 <h4 style="color:green">All Kids</h4>
+                            </div>
+                            <div 
+                                class="moreLessStyle" 
+                                [ngStyle]="{'display':showmore ? 'block' : 'none'}" 
+                                (click)="showMoreLess('more')">
+                                    <span class="glyphicon glyphicon-plus"></span> more info
+                            </div>
+                            <div 
+                                class="moreLessStyle" 
+                                [ngStyle]="{'display':!showmore ? 'block' : 'none'}" 
+                                (click)="showMoreLess('less')">
+                                    <span class="glyphicon glyphicon-minus"></span> less info 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let kid of data">
+                                <div class="col-xs-12 col-sm-3">
+                                    <img src="http://www.goemobile.com/mobile/daycare/{{kid.kid_picture_url}}"  class="img-responsive img-circle kidImage">
+                                </div>
+                                <div class="col-xs-12 col-sm-9">
+                                    <span class="kidName">{{kid.kid_name}}</span>
+                                    <span [ngStyle]="{'display':kid.kid_birthday_short == todayDateFormatted ? 'inline' : 'none'}">
+                                        <span class="bdaySpan"><img src="../../assets/images/happy_birthday.png" style="margin-top: -7px;"> today</span>
+                                    </span><br/>
+                                    <span class="name"><strong>Nickname:</strong> {{kid.kid_nickname}}</span><br>
+                                    <span class="name"><strong>Age:</strong> {{kid.kid_age}}</span><br>
+                                    <span class="name"><strong>Birthday: </strong>
+                                        <span [ngStyle]="{
+                                                'color':kid.kid_birthday_short == todayDateFormatted ? '#0FA5D0' : 'black',
+                                                'font-weight':kid.kid_birthday_short == todayDateFormatted ? 'bold' : 'normal'
+                                            }"
+                                            >
+                                            {{kid.kid_birthday}}
+                                        </span>
+                                    </span>
+                                    <br>
+                                    <span [ngStyle]="{'display':kid.kid_allergies ? 'inline' : 'none'}" class="name">
+                                            <strong>Allergies:</strong> 
+                                            <span [ngStyle]="{
+                                                'color':kid.kid_allergies != 'none' ? 'red' : 'black',
+                                                'font-weight':kid.kid_allergies != 'none' ? 'bold' : 'normal'}"
+                                            >
+                                            {{kid.kid_allergies}}
+                                            <span style="margin-left:10px;"><img src="../../assets/images/alert.png" style="width: 16px;"></span>
+                                            </span>
+                                    </span>
+                                    <br [ngStyle]="{'display':kid.kid_allergies ? 'inline' : 'none'}">
+                                    <span [ngStyle]="{'display':kid.kid_comments ? 'inline' : 'none'}" class="name">
+                                        <strong>Comments:</strong>
+                                        <span class="kidComments"> {{kid.kid_comments}}</span>
+                                        <br>
+                                    </span>
+
+                                    <div [ngStyle]="{'display': ismore ? 'inline' : 'none'}">
+                                        
+                                        <div class="nameMotherFatherHeader">Father</div>
+                                        <span>{{kid.kid_father_name}}</span><br>
+                                        <span class="glyphicon glyphicon-phone"> {{kid.kid_father_phone}}</span><br>
+                                        <span class="glyphicon glyphicon-envelope"> {{kid.kid_father_email}}</span><br>
+                                        <span [ngStyle]="{'display' : kid.kid_father_company ? 'inline' : 'none'}" class="glyphicon glyphicon-briefcase"> {{kid.kid_father_company}}</span>
+                                        
+                                        <div class="nameMotherFatherHeader">Mother</div>
+                                        <span>{{kid.kid_mother_name}}</span><br>
+                                        <span class="glyphicon glyphicon-phone"> {{kid.kid_mother_phone}}</span><br>
+                                        <span class="glyphicon glyphicon-envelope"> {{kid.kid_mother_email}}</span><br>
+                                        <span [ngStyle]="{'display' : kid.kid_mother_company ? 'inline' : 'none'}"class="glyphicon glyphicon-briefcase"> {{kid.kid_mother_company}}</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    

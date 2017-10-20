@@ -1,0 +1,34 @@
+.pointerImage{
+      cursor: pointer;
+}
+
+#wrapper {
+     margin: 0 auto;
+}
+#leftcolumn, #rightcolumn {
+    float: left;
+    padding:3px;
+}
+
+.missingFormValues{
+    border:3px solid red;
+}
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+    padding: 2em 23em;
+    background:lightgray;
+}
+
+.grayish{
+    color:lightgray;
+}
+
+.blackish{
+    color: black;
+}
+
+.missingFormValues{
+    border:3px solid red;
+}
